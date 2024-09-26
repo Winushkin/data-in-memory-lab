@@ -46,6 +46,56 @@ void CharInMemory(unsigned char ch){
 }
 
 
+void idz(db DoubleNum){
+    int changeBit;
+    while (true) {
+        cout << "Введите номер бита: ";
+        cin >> changeBit;
+        if (changeBit == -1) {
+            break;
+        } else if (changeBit < 0 || changeBit >= sizeof(DoubleNum.numDouble) * 8) {
+            cout << "Неверный ввод\n";
+        } else {
+            if ( changeBit <= 31 ){
+                if ( DoubleNum.arr[0] & (1 << changeBit)){
+                    DoubleNum.arr[0] -= pow(2, changeBit);
+                }else{
+                    DoubleNum.arr[0] += pow(2, changeBit);
+                }
+            }else{
+                if ( DoubleNum.arr[1] & (1 << changeBit)){
+                    DoubleNum.arr[1] -= pow(2, changeBit - 32);
+                }else{
+                    DoubleNum.arr[1] += pow(2, changeBit - 32);
+                }
+            }
+
+        }
+    }
+    DoubleInMemory(DoubleNum);
+}
+
+void idz(unsigned char ch){
+    int changeBit;
+    while (true) {
+        cout << "Введите номер бита: ";
+        cin >> changeBit;
+        if (changeBit == -1) {
+            break;
+        } else if (changeBit < 0 || changeBit >= sizeof(ch) * 8) {
+            cout << "Неверный ввод\n";
+        } else {
+            if ( ch & (1 << changeBit) ){
+                ch -= pow(2, changeBit);
+            }else{
+                ch += pow(2, changeBit);
+            }
+        }
+    }
+    CharInMemory(ch);
+}
+
+
 
 int main(){
     db DoubleNum;
@@ -54,9 +104,13 @@ int main(){
     cout << "Введите число типа long double: ";
     cin >> DoubleNum.numDouble;
     DoubleInMemory(DoubleNum);
+    idz(DoubleNum);
+    cout << "\n";
 
     cout << "Введите числа типа unsigned char: ";
     cin >> ch;
     CharInMemory(ch);
+    idz(ch);
+    cout << "\n";
 
 }
