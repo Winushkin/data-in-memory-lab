@@ -47,26 +47,41 @@ void CharInMemory(unsigned char ch){
 
 
 void idz(db DoubleNum){
-    int changeBit;
+    int changeBit, state;
     while (true) {
-        cout << "Введите номер бита: ";
+
+        cout << "Введите номера бита и состояние через пробел: ";
         cin >> changeBit;
+        cin >> state;
+
         if (changeBit == -1) {
             break;
         } else if (changeBit < 0 || changeBit >= sizeof(DoubleNum.numDouble) * 8) {
             cout << "Неверный ввод\n";
         } else {
+            if (!( state == 1 || state == 0)){
+                cout << "Неверный ввод\n";
+                continue;
+            }
             if ( changeBit <= 31 ){
-                if ( DoubleNum.arr[0] & (1 << changeBit)){
-                    DoubleNum.arr[0] -= pow(2, changeBit);
+                if (DoubleNum.arr[0] & (1 << changeBit)){
+                    if ( !state ){
+                        DoubleNum.arr[0] -= pow(2, changeBit);
+                    }
                 }else{
-                    DoubleNum.arr[0] += pow(2, changeBit);
+                    if ( state ){
+                        DoubleNum.arr[0] += pow(2, changeBit);
+                    }
                 }
             }else{
-                if ( DoubleNum.arr[1] & (1 << changeBit)){
-                    DoubleNum.arr[1] -= pow(2, changeBit - 32);
+                if (DoubleNum.arr[0] & (1 << changeBit)){
+                    if ( !state ){
+                        DoubleNum.arr[0] -= pow(2, changeBit);
+                    }
                 }else{
-                    DoubleNum.arr[1] += pow(2, changeBit - 32);
+                    if ( state ){
+                        DoubleNum.arr[0] += pow(2, changeBit);
+                    }
                 }
             }
 
@@ -76,19 +91,29 @@ void idz(db DoubleNum){
 }
 
 void idz(unsigned char ch){
-    int changeBit;
+    int changeBit, state;
+
     while (true) {
-        cout << "Введите номер бита: ";
+        cout << "Введите номера бита и состояние через пробел: ";
         cin >> changeBit;
+        cin >> state;
         if (changeBit == -1) {
             break;
         } else if (changeBit < 0 || changeBit >= sizeof(ch) * 8) {
             cout << "Неверный ввод\n";
         } else {
-            if ( ch & (1 << changeBit) ){
-                ch -= pow(2, changeBit);
+            if (!( state == 1 || state == 0)){
+                cout << "Неверный ввод\n";
+                continue;
+            }
+            if (ch & (1 << changeBit)){
+                if ( !state ){
+                    ch -= pow(2, changeBit);
+                }
             }else{
-                ch += pow(2, changeBit);
+                if ( state ){
+                    ch += pow(2, changeBit);
+                }
             }
         }
     }
